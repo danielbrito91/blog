@@ -1,0 +1,31 @@
+theme: "hugo-PaperMod"
+baseURL: http://example.org/
+languageCode: en-us
+title: "Daniel Brito"
+paginate: 5
+
+# googleAnalytics: UA-123-45
+
+#minify:
+   # disableXML: true
+    # minifyOutput: true
+
+params:
+        homeInfoParams:
+                Title: "Hi👋!"
+                Content: "I'm an engineer who loves to solve problems with data. I created this blog to share my projects. Hope you enjoy it 🥳" 
+                
+        socialIcons:
+        - name: github
+          url: "https://github.com/adityatelange/hugo-PaperMod"
+        - name: twitter
+          url: "https://ko-fi.com/adityatelange"
+        
+        
+        ShowShareButtons: true
+        ShowBreadCrumbs: true
+        comments: true
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
