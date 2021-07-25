@@ -1,7 +1,7 @@
 ---
 title: 'Fantano doesn’t like to dance: a classification model on Needle Drop’s reviews'
 author: Daniel Brito
-date: '2021-07-24'
+date: '2021-07-25'
 cover:
         image: "https://lastfm.freetls.fastly.net/i/u/770x0/63dce6a777fc491b8c317542037bd15d.webp#63dce6a777fc491b8c317542037bd15d"
         alt: ""
@@ -498,35 +498,31 @@ rf_rscv.fit(X_train_prep, y_train_values)</code></pre>
 <p>We can see that precision falls quickly. It is far from the perfect classifier, but it shows some improvement compared to the baseline classifier (all albums being loved). With a threshold of 0.2, we get close to 80% of the loved albums with precision near 30%; with a threshold of 0.5, almost no loved album would be identified.</p>
 <pre class="python"><code>from sklearn.model_selection import cross_val_predict
 from sklearn.metrics import precision_recall_curve
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 def plot_rec_prec(trained_model, plot_title):
   y_scores = cross_val_predict(trained_model, X_train_prep, y_train_values, cv = 3, method = &quot;predict_proba&quot;)
   precisions, recalls, thresholds = precision_recall_curve(y_train_values, y_scores[:,1])
-  fig = plt.figure()
-  _ = plt.subplot(1, 2, 1)
-  _ = plt.plot(recalls, precisions)
-  _ = plt.grid(True)
-  _ = plt.xlabel(&quot;Recall&quot;)
-  _ = plt.ylabel(&quot;Precision&quot;)
-  _ = plt.title(plot_title)
-  _ = plt.xticks(np.arange(0, 1.01, step=0.1))
-  _ =  plt.yticks(np.arange(0, 1.01, step=0.1))
   
-  _ = plt.subplot(1, 2, 2)
-  _ = plt.grid(True)
-  _ = plt.plot(thresholds, precisions[:-1], &quot;b--&quot;, label = &quot;Precision&quot;)
-  _ = plt.plot(thresholds, recalls[:-1], &quot;g-&quot;, label =&quot;Recall&quot;)
-  _ = plt.xlabel(&quot;Threshold&quot;)
-  _ = plt.yticks(np.arange(0, 1.01, step=0.1))
-  _ = plt.legend()
+  plt.subplot(1, 2, 1)
+  plt.plot(recalls, precisions)
+  plt.grid(True)
+  plt.xlabel(&quot;Recall&quot;)
+  plt.ylabel(&quot;Precision&quot;)
+  plt.title(plot_title)
+  plt.xticks(np.arange(0, 1.01, step=0.1))
+  plt.yticks(np.arange(0, 1.01, step=0.1))
   
-  return fig</code></pre>
+  plt.subplot(1, 2, 2)
+  plt.grid(True)
+  plt.plot(thresholds, precisions[:-1], &quot;b--&quot;, label = &quot;Precision&quot;)
+  plt.plot(thresholds, recalls[:-1], &quot;g-&quot;, label =&quot;Recall&quot;)
+  plt.xlabel(&quot;Threshold&quot;)
+  plt.yticks(np.arange(0, 1.01, step=0.1))
+  plt.legend()</code></pre>
 <pre class="python"><code>plt.close()
-plot_rec_prec(rfc, &quot;Random Forest: precision and recall&quot;)</code></pre>
-
-<pre class="python"><code>plt.show()</code></pre>
+plot_rec_prec(rfc, &quot;Random Forest: precision and recall&quot;)
+plt.show()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/split-1.png" width="672" /></p>
 <pre class="python"><code>from sklearn.model_selection import cross_val_score
 
@@ -557,9 +553,8 @@ et_rscv.fit(X_train_prep, y_train_values)</code></pre>
 <pre class="python"><code>etc = et_rscv.best_estimator_</code></pre>
 <p>The precision and recall plots are pretty like the ones on Random Forest, although the results seem slightly better – i.e., for a threshold of 0.2, we got a recall near .85.</p>
 <pre class="python"><code>plt.close()
-plot_rec_prec(etc, &quot;Extra-Tree: precision and recall&quot;)</code></pre>
-
-<pre class="python"><code>plt.show()</code></pre>
+plot_rec_prec(etc, &quot;Extra-Tree: precision and recall&quot;)
+plt.show()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/split-3.png" width="672" /></p>
 <pre class="python"><code>et_scores = cross_val_score(etc, X_train_prep, y_train_values, scoring=&quot;roc_auc&quot;,cv=10)</code></pre>
 </div>
@@ -586,11 +581,10 @@ logit.fit(X_train_prep, y_train_values)</code></pre>
 ##                    return_train_score=True, scoring=&#39;roc_auc&#39;)</code></pre>
 <pre class="python"><code>logit_best = logit.best_estimator_</code></pre>
 <p>The precision-recall plots are not like the previous ones. With high thresholds (&gt;0.8), none album is identified as loved. Also, The precision-recall curve show some bouncing near recall = 0. The results seem slightly worse than the ensemble models.</p>
-<pre class="python"><code>#Precision recall
-plt.close()
-plot_rec_prec(logit_best, &quot;Logistic Regression: precision and recall&quot;)</code></pre>
+<pre class="python"><code>plt.close()
 
-<pre class="python"><code>plt.show()</code></pre>
+plot_rec_prec(logit_best, &quot;Logistic Regression: precision and recall&quot;)
+plt.show()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/split-5.png" width="672" /></p>
 <pre class="python"><code>log_reg_scores = cross_val_score(logit_best, X_train_prep, y_train_values, scoring=&quot;roc_auc&quot;, cv=10)</code></pre>
 </div>
@@ -642,7 +636,7 @@ test_roc_auc = roc_auc_score(y_test_values, y_pred_proba[:, 1])
 
 #False positive rate, true positive rate and thresholds
 fpr, tpr, thresholds = roc_curve(y_test_values, y_pred_proba[:,1])</code></pre>
-<p>The selected model achieved an AUC score of 0.6274, better than the dummy predictor (0.50), similar to the value found on the train set with cross-validation. It is a quite limited classifier, but it can help distinguish the loved albums to some extent.</p>
+<p>The selected model achieved an AUC score of 0.635, better than the dummy predictor (0.50), similar to the value found on the train set with cross-validation. It is a quite limited classifier, but it can help distinguish the loved albums to some extent.</p>
 <pre class="r"><code>tibble(fpr = py$fpr, tpr = py$tpr, thresholds = py$thresholds) %&gt;% 
   ggplot(aes(x = fpr, y = tpr)) +
   geom_line(size = 1) +
@@ -678,14 +672,6 @@ feat_importance %&gt;%
    theme(
      plot.background = element_rect(fill = palette[1]))</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="python"><code>from sklearn.inspection import partial_dependence
-from sklearn.inspection import plot_partial_dependence
-
-
-pdp_in_r = partial_dependence(etc, X_train_prep, features = [6],
-                         response_method = &#39;predict_proba&#39;,
-                         kind = &#39;individual&#39;,
-                        grid_resolution = 20)</code></pre>
 <p>We see that, on average, increasing mean danceability of an album drops the chances of an album being loved. Also, increasing the standard deviation of liveness, the standard deviation of energy, and mean instrumentalness increase the chances of Fantano loving an album.</p>
 <pre class="python"><code>from sklearn.inspection import plot_partial_dependence
 
@@ -693,11 +679,13 @@ train_prep_df = pd.DataFrame(X_train_prep)
 
 train_prep_df.columns = attributes
 
+plt.close()
 display = plot_partial_dependence(etc, train_prep_df, features = [&#39;mean_danceability&#39;, &#39;sd_liveness&#39;, &#39;sd_energy&#39;, &#39;mean_instrumentalness&#39;])
 display.figure_.subplots_adjust(wspace=0.4, hspace=0.3)
 plt.show(display.figure_)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/split-1.png" width="672" /></p>
-<p>I wanted to check how the mean danceability of an album affected the dependence of the prediction for each instance. So, I plotted the individual conditional expectation (ICE) curve. I could not obtain the ICE curve values with <code>reticulate</code>, so I got it in the Jupyter Notebook using the same code. The ICE plot shows that mean danceability doesn’t markedly influence the predicted values for some albums with a higher probability of being loved. But, although with some noise, the plot reveals a decreasing predicted chance of getting a high score when increasing the mean danceability.</p>
+<pre class="python"><code>plt.close()</code></pre>
+<p>I wanted to check how the mean danceability of an album affected the dependence of the prediction for each instance. So, I plotted the individual conditional expectation (ICE) curve. I could not obtain the ICE curve values with <code>reticulate</code>, so I got it in Jupyter Notebook. The ICE plot shows that mean danceability doesn’t markedly influence the predicted values for some albums with a higher probability of being loved. But, although with some noise, the plot reveals a decreasing predicted chance of getting a high score when increasing the mean danceability.</p>
 <pre class="r"><code>pdp_individual &lt;- read.csv(&quot;./input/pdp.csv&quot;)
 
 pdp &lt;-
@@ -727,11 +715,13 @@ ggplot(data = pdp, mapping = aes(x = val, y = partial)) +
     plot.background = element_rect(fill = palette[1]),
     plot.title = element_markdown()
   )</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
 <hr />
 </div>
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
 <p>I fitted a classification model on the Needle Drop scores using the Spotify data as predictors. As a real-world model, it is a limited classifier. So, although Anthony will not be replaced by a machine (at least not yet), the data showed some interesting insights about what is going on in Melon’s head. And yeap, Fantano does not like to dance.</p>
-<p>Thanks for reading! I’m open to any feedback or constructive criticism. You can reach me on Twitter <span class="citation">@daniel_brito_</span></p>
+<hr />
+<p>tran…SITION</p>
+<p>Thanks for reading! I’m open to any feedback or constructive criticism. You can reach me on Twitter <span class="citation">@_danielbrito_</span></p>
 </div>

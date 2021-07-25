@@ -2,40 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://example.org/categories/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/categories/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/classification/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/tags/classification/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/extra-trees/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/tags/extra-trees/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/post/2021-07-24-fantano-doesn-t-like-to-dance-a-classification-model-on-needle-drop-s-reviews/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/post/2021-07-24-fantano-doesn-t-like-to-dance-a-classification-model-on-needle-drop-s-reviews/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/ggplot2/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/tags/ggplot2/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/ice/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/tags/ice/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/post/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/post/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/python/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/categories/python/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/categories/r/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/categories/r/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/scikit-learn/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/tags/scikit-learn/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/tags/</loc>
-    <lastmod>2021-07-24T00:00:00+00:00</lastmod>
+    <loc>https://danielbrito.netlify.app/tags/</loc>
+    <lastmod>2021-07-25T00:00:00+00:00</lastmod>
   </url>
 </urlset>

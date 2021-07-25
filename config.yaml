@@ -13,7 +13,7 @@ paginate: 5
 params:
         homeInfoParams:
                 Title: "Hi👋!"
-                Content: "I'm an engineer who loves to solve problems with data. I created this blog to share my projects. Hope you enjoy it 🥳" 
+                Content: "I created this blog to share my data science projects. Hope you enjoy it" 
                 
         socialIcons:
         - name: github

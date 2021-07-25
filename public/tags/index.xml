@@ -2,53 +2,53 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Daniel Brito</title>
-    <link>http://example.org/tags/</link>
+    <link>https://danielbrito.netlify.app/tags/</link>
     <description>Recent content in Tags on Daniel Brito</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danielbrito.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>classification</title>
-      <link>http://example.org/tags/classification/</link>
-      <pubDate>Sat, 24 Jul 2021 00:00:00 +0000</pubDate>
+      <link>https://danielbrito.netlify.app/tags/classification/</link>
+      <pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/classification/</guid>
+      <guid>https://danielbrito.netlify.app/tags/classification/</guid>
       <description></description>
     </item>
     
     <item>
       <title>extra-trees</title>
-      <link>http://example.org/tags/extra-trees/</link>
-      <pubDate>Sat, 24 Jul 2021 00:00:00 +0000</pubDate>
+      <link>https://danielbrito.netlify.app/tags/extra-trees/</link>
+      <pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/extra-trees/</guid>
+      <guid>https://danielbrito.netlify.app/tags/extra-trees/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ggplot2</title>
-      <link>http://example.org/tags/ggplot2/</link>
-      <pubDate>Sat, 24 Jul 2021 00:00:00 +0000</pubDate>
+      <link>https://danielbrito.netlify.app/tags/ggplot2/</link>
+      <pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/ggplot2/</guid>
+      <guid>https://danielbrito.netlify.app/tags/ggplot2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ice</title>
-      <link>http://example.org/tags/ice/</link>
-      <pubDate>Sat, 24 Jul 2021 00:00:00 +0000</pubDate>
+      <link>https://danielbrito.netlify.app/tags/ice/</link>
+      <pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/ice/</guid>
+      <guid>https://danielbrito.netlify.app/tags/ice/</guid>
       <description></description>
     </item>
     
     <item>
       <title>scikit-learn</title>
-      <link>http://example.org/tags/scikit-learn/</link>
-      <pubDate>Sat, 24 Jul 2021 00:00:00 +0000</pubDate>
+      <link>https://danielbrito.netlify.app/tags/scikit-learn/</link>
+      <pubDate>Sun, 25 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/scikit-learn/</guid>
+      <guid>https://danielbrito.netlify.app/tags/scikit-learn/</guid>
       <description></description>
     </item>
     
