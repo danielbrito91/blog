@@ -25,11 +25,11 @@ tags:
 knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 ```
 
-Anthony Fantano (@theneedledrop, a.k.a Melon) has been reviewing albums on his [YouTube channel](https://www.youtube.com/c/theneedledrop/videos) for more than one decade. I have been enjoying his work and discovering some great music, at least since 2014.
+Anthony Fantano (@theneedledrop, a.k.a Melon) has been reviewing albums on his [YouTube channel](https://www.youtube.com/c/theneedledrop/videos) for more than one decade. I've been enjoying his work and discovering some great music since 2014.
 
-Recently, I was wondering if I could fit a classification model to predict if the reviewed album would get a high score. Besides trying to predict if Fantano would love an album, I wanted to understand what features drive his scoring. And, as the title of this post suggests, I found that the danceability of an album isn't a feature that Melon appreciates.
+Recently, I was wondering if I could fit a classification model to predict if an album would get a high score from Fantano. Besides, I wanted to understand what features drive his scoring. Surprisingly, I found that danceability isn't a feature that Melon appreciates.
 
-Using Python and R, I got the audio features of the albums from Spotify using `spotipy`, cleaned the data in R, and fitted and evaluated a predictive model with Scikit-Learn. The whole process is described in this post, which was written in R Markdown and published with [blogdown](https://bookdown.org/yihui/blogdown/).
+Using Python and R, I got the audio features of the albums from Spotify using `spotipy`, cleaned the data in R, fitted and evaluated a predictive model with Scikit-Learn. The whole process is described in this post.
 
 ---
 
@@ -57,7 +57,7 @@ library(patchwork)
 
 ## Reviews
 
-Part of the dataset containing the relation of reviews and its scores came from [Jared Arcilla's Kaggle dataset](https://www.kaggle.com/jaredarcilla/anthony-fantano-reviews?select=fantano_reviews.csv) and by one [Reddit user](https://www.reddit.com/r/fantanoforever/comments/c11z5m/google_sheet_of_fantanos_reviews/) (unfortunately, the post was deleted), and later completed by me by hand. The last video in the database is Palais d'Argile by Feu! Chatterton (posted on 2021-03-25). I searched album and artist URI from Spotify using `spotipy`. The relation of album URI, album title, artist name, artist URI, and review features (date, type, score, and link) were stored on Google Sheets.
+Part of the dataset containing the relation of reviews and its scores came from [Jared Arcilla's Kaggle dataset](https://www.kaggle.com/jaredarcilla/anthony-fantano-reviews?select=fantano_reviews.csv) and by one [Reddit user](https://www.reddit.com/r/fantanoforever/comments/c11z5m/google_sheet_of_fantanos_reviews/) (unfortunately, the post was deleted), and later completed by me. The last video in the database is Palais d'Argile by Feu! Chatterton (posted on 2021-03-25). I searched album and artist URI from Spotify using `spotipy`. The relation of album URI, album title, artist name, artist URI, and review features (date, type, score, and link) were stored on Google Sheets.
 
 ```{r load reviews}
 gs4_deauth() #the google sheet is public
@@ -85,7 +85,7 @@ reviews %>%
 ```
 
 ## Audio features
-Later, I pulled the albums' audio features in Python with `spotypy`. The code can be accessed here. The following features were gathered, whose description can be found on [Spotify Web API documentation](https://hexdocs.pm/spotify_web_api/api-reference.html):
+Later, I pulled the albums' audio features in Python with `spotipy`. The code can be [accessed here](https://github.com/danielbrito91/blog/tree/main/content/post/2021-07-24-fantano-doesn-t-like-to-dance-a-classification-model-on-needle-drop-s-reviews/input). The following features were gathered, whose description can be found on [Spotify Web API documentation](https://hexdocs.pm/spotify_web_api/api-reference.html):
 
 * `explicity`: "whether or not the track has explicit lyrics (`true` = yes it does; `false` = no it does not OR unknown)."
 
@@ -109,7 +109,7 @@ Later, I pulled the albums' audio features in Python with `spotypy`. The code ca
 
 * `valence`: "a measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)."
 
-I also get the album's popularity (`album_popularity`, a value between 0 and 100, with 100 being the most popular) and the list of genres associated with the artist (`artist_genres`). The gathered data were stored on the `spotify_songs.csv` file (available on my GitHub).
+I also got the album's popularity (`album_popularity`, a value between 0 and 100, with 100 being the most popular) and the list of genres associated with the artist (`artist_genres`). The gathered data were stored on the `spotify_songs.csv` file (available on GitHub).
 
 ```{r spotify songs features}
 songs <- read.csv("input/spotify_songs.csv")
@@ -117,7 +117,7 @@ songs <- read.csv("input/spotify_songs.csv")
 
 ## Joining all together
 
-Later, I joined the songs data with the reviews data, extracted the artist genres (1 genre per column). The mean and the standard deviation of each song's audio feature were summarised by album. Also, I calculated the "Sonic Anger Index" of each album based on its mean energy and valance, following the approach by [Even Oppenheimer to find the angriest Death Grips song](https://towardsdatascience.com/angriest-death-grips-data-anger-502168c1c2f0).
+Later, I joined the songs data with the reviews data, extracted the artist genres (1 genre per column). The mean and the standard deviation of each song's audio feature were summarised by album. Also, I calculated the "Sonic Anger Index" of each album based on its mean energy and valence, following the approach by [Even Oppenheimer to find the angriest Death Grips song](https://towardsdatascience.com/angriest-death-grips-data-anger-502168c1c2f0).
 
 ```{r albums features, cache = TRUE}
 reviews_songs <- reviews %>%
@@ -176,7 +176,7 @@ songs_features_by_album <-
   select(-album_length)
 ```
 
-Finally, I selected the first valid value in the features that contained genres and consolidate the data in  `album_review_features`.
+Finally, I selected the first valid value in the features that contained genres and consolidated the data in  `album_review_features`.
 
 ```{r}
 album_review_features <-
@@ -275,7 +275,7 @@ We have `r length(unique(album_review_features$genre))` genres, of which the mos
 
 ![](https://thumbs.gfycat.com/CloudyThisChick-size_restricted.gif)
 
-When just lumping those genres, a lot of information is lost. So, to deal with it, I replaced the specifics subgenres with a more broad view of the genres: instead of "alternative hip hop", "hip hop", "atl hip hop" and the variations that appear on the data, I will call it just "hip hop". The same idea was applied to rock, metal, punk, pop, folk, r&b, electronic, regional music, experimental, jazz and ambient. Some of the subgenres were too specific (afrofuturism, escape room, chamber psych and permanent wave) and contained too many observations, so, they were replaced regarding the artists associated with them. I considered the [Rate Your Music](https://rateyourmusic.com/genres) data as a major reference here.
+To deal with it, I replaced the specifics subgenres with a more broad view of the genres: instead of "alternative hip hop", "hip hop", "atl hip hop" and the variations that appear on the data, let's just call it "hip hop". The same idea was applied to rock, metal, punk, pop, folk, r&b, electronic, regional music, experimental, jazz and ambient. Some of the subgenres were too specific (afrofuturism, escape room, chamber psych and permanent wave) and contained too many observations. They were replaced regarding the artists associated with them. [Rate Your Music](https://rateyourmusic.com/genres) data was a major reference here.
 
 ```{r genres}
 album_review_features %>%
@@ -360,7 +360,7 @@ reviews_features_genres <-
   mutate(genre = fct_lump_min(genre, 3, other_level = "not found"))
 ```
 
-After that, most of the reviewed albums fall into the hip hop genre, followed by rock, pop, metal, electronic, punk and alternative dance. Goodbye wu fam, plunderphonics and meme rap.
+Most of the reviewed albums fall into the hip hop genre, followed by rock, pop, metal, electronic, punk and alternative dance. Goodbye wu fam, plunderphonics and meme rap.
 
 ```{r genre_view}
 
@@ -396,7 +396,7 @@ reviews_features_genres %>%
 
 ## Dealing with missing albums and scores
 
-I didn't consider the albums without numerical scores and the albums that I didn't find on Spotify. So, filtering that data we have a total of 2097 albums to work with to create our predictors, target and labels.
+Albums without numerical scores and the albums that I didn't find on Spotify weren't considered. So, filtering that data, we have a total of 2097 albums to create our predictors, target and labels.
 
 ```{r}
 na_rm_data <- 
@@ -452,7 +452,7 @@ labels <-
 
 ## Splitting the data
 
-Let's go to Python to preprocess the data using Scikit-Learn. First, I imported the data into the Python environment. I did the train/test splitting stratifying by the score values, considering that we have few observations with very low (0-3) and very high (9-10) scores. I used 20% of the data as test data.
+Let's go to Python to preprocess the data using Scikit-Learn. First, the data was imported into the Python environment. The train/test splitting was stratifying by the score values, considering that we have few observations with very low (0-3) and very high (9-10) scores.
 
 ```{python split}
 from sklearn.model_selection import train_test_split
@@ -468,7 +468,7 @@ y_test_values = y_test.values.ravel()
 
 ## Scaling and encoding
 
-I preprocessed the train data first to avoid data leakage, (see, for instance, the[Bex T. post on Towards Data Science](https://towardsdatascience.com/6-sklearn-mistakes-that-silently-tell-you-are-a-rookie-84fa55f2b9dd)). The missing numeric features were inputed with the median values. The categorical features were encoded with One Hot Encoder, and the numerical features were scaled with the standard scaler.
+I preprocessed the train data first to avoid data leakage (see, for instance, the [Bex T. post on Towards Data Science](https://towardsdatascience.com/6-sklearn-mistakes-that-silently-tell-you-are-a-rookie-84fa55f2b9dd)). The missing numeric features were imputed with the median values. The categorical features were encoded with One Hot Encoder, and the numerical features were scaled with the standard scaler.
 
 ```{python pre_pro}
 from sklearn.preprocessing import OneHotEncoder
@@ -505,7 +505,7 @@ X_train_prep = full_pipeline.fit_transform(X_train)
 
 # Supervised Learning Modeling
 
-The data is quite unbalanced. If we measure our success with accuracy, a dummy model that considered that Fantano didn't love any album would get a `r  100 * round(1 - mean(py$y_train$loved), 2)`% score on train data. But who wants such a sad world with no loved albums? So, I trained a classification model looking for optimizing the total Area Under the Curve (AUC) metric, trying to find a classifier that shows if Melon would love an album.
+The data is quite unbalanced. If we measure our success with accuracy, a dummy model that considers that Fantano didn't love any album would get a `r  100 * round(1 - mean(py$y_train$loved), 2)`% score on train data. But who wants such a sad world with no loved albums? So, I trained a classification model looking for optimizing the total Area Under the Curve (AUC) metric, trying to find a classifier that shows if Melon would love an album.
 
 ```{r echo = FALSE}
 
@@ -548,11 +548,12 @@ rf_rscv.fit(X_train_prep, y_train_values)
 rfc = rf_rscv.best_estimator_
 ```
 
-We can see that precision falls quickly. It is far from the perfect classifier, but it shows some improvement compared to the baseline classifier (all albums being loved). With a threshold of 0.2, we get close to 80% of the loved albums with precision near 30%; with a threshold of 0.5, almost no loved album would be identified.
+We can see that precision falls quickly. It is far from the perfect classifier, but it shows some improvement compared to the baseline classifier. With a threshold of 0.2, we get close to 80% of the loved albums with precision near 30%. With a threshold of 0.5, almost no loved album would be identified.
 
 ```{python plot_function}
 from sklearn.model_selection import cross_val_predict
 from sklearn.metrics import precision_recall_curve
+import matplotlib
 import matplotlib.pyplot as plt
 
 def plot_rec_prec(trained_model, plot_title):
@@ -577,11 +578,21 @@ def plot_rec_prec(trained_model, plot_title):
   plt.legend()
 ```
 
-```{python plot_random_forest}
+```{python plot_random_forest, echoe = TRUE, include = FALSE}
+#I had to run this code chunk twice.
+
+plt.figure()
+plot_rec_prec(rfc, "Random Forest: precision and recall")
+plt.show()
+```
+
+```{python plot_random_forest_02}
 plt.close()
 plot_rec_prec(rfc, "Random Forest: precision and recall")
 plt.show()
 ```
+
+
 
 ```{python rf_scores}
 from sklearn.model_selection import cross_val_score
@@ -591,7 +602,7 @@ rf_scores = cross_val_score(rfc, X_train_prep, y_train_values, scoring = "roc_au
 
 ## Extremely Randomized Trees
 
-The Extremely Randomized Trees (or Extra-trees) model makes the Random Forest more random by using random thresholds for each feature. I thought in giving it a try, checking if a higher randomization level could improve the results. I also performed hyperparameter tunning in `min_samples_split`, `min_samples_leaf` and `max_features`.
+The Extremely Randomized Trees (or Extra-trees) model makes the Random Forest more random by using random thresholds for each feature. I thought about giving it a try, checking if a higher randomization level could improve the results. I also performed hyperparameter tunning in `min_samples_split`, `min_samples_leaf` and `max_features`.
 
 ```{python et}
 from sklearn.ensemble import ExtraTreesClassifier
@@ -622,7 +633,7 @@ et_scores = cross_val_score(etc, X_train_prep, y_train_values, scoring="roc_auc"
 
 ## Logistic Regression
 
-The simplest model to use and interpret in this post, I fitted a logistic regression model using a ridge regularization (setting `penalty = “l2”`). I tunned the inverse of regularization strength (`C`) hyperparameter.
+This is the simplest model to use and interpret in this post. I fitted a logistic regression model using a ridge regularization (setting `penalty = “l2”`), and tunned the inverse of regularization strength (`C`) hyperparameter.
 
 ```{python logit}
 from sklearn.linear_model import LogisticRegression
@@ -638,7 +649,7 @@ logit.fit(X_train_prep, y_train_values)
 logit_best = logit.best_estimator_
 ```
 
-The precision-recall plots are not like the previous ones. With high thresholds (>0.8), none album is identified as loved. Also, The precision-recall curve show some bouncing near recall = 0. The results seem slightly worse than the ensemble models.
+The precision-recall plots are not like the previous ones. With high thresholds (>0.8), none album is identified as loved. Also, the precision-recall curve show some bouncing near recall = 0. The results seem slightly worse than the ensemble models.
 
 ```{python logit_pre_rec}
 plt.close()
@@ -706,7 +717,7 @@ test_roc_auc = roc_auc_score(y_test_values, y_pred_proba[:, 1])
 fpr, tpr, thresholds = roc_curve(y_test_values, y_pred_proba[:,1])
 ```
 
-The selected model achieved an AUC score of `r round(py$test_roc_auc, 4)`, better than the dummy predictor (0.50),  similar to the value found on the train set with cross-validation. It is a quite limited classifier, but it can help distinguish the loved albums to some extent.
+The selected model achieved an AUC score of `r round(py$test_roc_auc, 4)`, better than the dummy predictor and  similar to the value found on the train set with cross-validation. It's a quite limited classifier, but it can help distinguish the loved albums to some extent.
 
 ```{r roc_auc curve}
 
@@ -767,12 +778,7 @@ display.figure_.subplots_adjust(wspace=0.4, hspace=0.3)
 plt.show(display.figure_)
 ```
 
-```{python}
-plt.close()
-```
-
-
-I wanted to check how the mean danceability of an album affected the dependence of the prediction for each instance. So, I plotted the individual conditional expectation (ICE) curve. I could not obtain the ICE curve values with `reticulate`, so I got it in Jupyter Notebook. The ICE plot shows that mean danceability doesn't markedly influence the predicted values for some albums with a higher probability of being loved. But, although with some noise, the plot reveals a decreasing predicted chance of getting a high score when increasing the mean danceability.
+I wanted to check how the mean danceability of an album affected the dependence of the prediction for each instance. So, I plotted the individual conditional expectation (ICE) curve. I couldn't obtain the ICE curve values with `reticulate`, so I got it with Jupyter Notebook. The ICE plot shows that mean danceability doesn't markedly influence the predicted values for some albums with a higher probability of being loved. But, although with some noise, the plot reveals a decreasing predicted chance of getting a high score when increasing the mean danceability.
 
 ```{r}
 
