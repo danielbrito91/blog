@@ -637,7 +637,7 @@ test_roc_auc = roc_auc_score(y_test_values, y_pred_proba[:, 1])
 
 #False positive rate, true positive rate and thresholds
 fpr, tpr, thresholds = roc_curve(y_test_values, y_pred_proba[:,1])</code></pre>
-<p>The selected model achieved an AUC score of 0.6267, better than the dummy predictor and similar to the value found on the train set with cross-validation. It’s a quite limited classifier, but it can help distinguish the loved albums to some extent.</p>
+<p>The selected model achieved an AUC score of 0.6312, better than the dummy predictor and similar to the value found on the train set with cross-validation. It’s a quite limited classifier, but it can help distinguish the loved albums to some extent.</p>
 <pre class="r"><code>tibble(fpr = py$fpr, tpr = py$tpr, thresholds = py$thresholds) %&gt;% 
   ggplot(aes(x = fpr, y = tpr)) +
   geom_line(size = 1) +
