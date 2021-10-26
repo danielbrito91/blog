@@ -1,5 +1,5 @@
 theme: "hugo-PaperMod"
-baseURL: https://danielbrito.netlify.app/
+baseURL: https://danielbrito.me/
 languageCode: en-us
 title: "Daniel Brito"
 paginate: 5
