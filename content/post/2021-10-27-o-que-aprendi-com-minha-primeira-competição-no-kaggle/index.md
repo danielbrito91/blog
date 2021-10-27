@@ -17,7 +17,7 @@ tags:
   - kaggle
 ---
 
-Neste mês de outubro fiz minha primeira participação em uma competição oficial do Kaggle. Até então, eu só havia utilizado alguns toy datasets da plataforma (ao exemplo do Titanic), sem ter ainda colocado a mão na massa em uma competição real. Resolvi arriscar no Porto Seguro Data Challenge e, para minha inicial decepção, meu resultado foi péssimo. Após o desânimo inicial, inspirado pelo depoimento do saudoso [Mário Filho](https://www.youtube.com/watch?v=EqHyE9MYcmw&t=364s), resolvi [levantar, sacodir a poeira e, aos poucos, tentar dar a volta por cima](https://www.youtube.com/watch?v=CHUl7pj5S_8).
+Neste mês de outubro fiz minha primeira participação em uma competição oficial do Kaggle. Até então, eu só havia utilizado alguns toy datasets da plataforma (ao exemplo do Titanic), sem ter ainda colocado a mão na massa em uma competição real. Resolvi arriscar no Porto Seguro Data Challenge e, para minha inicial decepção, meu resultado foi bem aquém do que eu gostaria. Após o desânimo inicial, inspirado pelo depoimento do saudoso [Mário Filho](https://www.youtube.com/watch?v=EqHyE9MYcmw&t=364s), resolvi [levantar, sacodir a poeira e, aos poucos, tentar dar a volta por cima](https://www.youtube.com/watch?v=CHUl7pj5S_8).
 
 
 O dataset da competição apresentava vários desafios, alguns mais difíceis  do que outros: dados anonimizados, dados categóricos com um altíssimo número de valores distintos (particularmente meu maior inimigo dessas últimas semanas), target desbalanceado e dados faltantes. Resolvi escrever esse post para documentar meu processo de aprendizado, tentando levar para outras competições e projetos o que aprendi por aqui.
